@@ -1,58 +1,275 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# My Notes – Laravel 13
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A simple notes management application built with **Laravel 13**. This project is part of my Laravel learning journey and demonstrates how to build a practical web application using Laravel's MVC architecture, Eloquent ORM, Blade templating, authentication, CRUD operations, and authorization policies.
 
-## About Laravel
+## Overview
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+My Notes allows users to register, log in, and manage their own notes (called entries in the application). It is intended as a hands-on learning project for understanding how the main parts of a Laravel application work together.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **User authentication** – user registration and login.
+- **Create notes** – add a new note/entry.
+- **View notes** – display the notes list and individual note details.
+- **Update notes** – edit an existing note.
+- **Delete notes** – remove a note.
+- **Authorization** – use Laravel policies to control access to protected resources.
+- **Reusable Blade components** – share UI elements across views.
+- **Database migrations** – manage the database schema through Laravel migrations.
 
-## Learning Laravel
+> The application uses the term `Entry` in its model and controller code to represent a note.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Tech Stack
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Technology | Purpose |
+|---|---|
+| PHP | Backend programming language |
+| Laravel 13 | PHP web application framework |
+| MySQL / SQLite | Database (configured through `.env`) |
+| Eloquent ORM | Database queries and model interaction |
+| Blade | Server-side view templating |
+| Vite | Frontend asset development and build |
+| CSS / JavaScript | Frontend styling and interactions |
+| PHPUnit | Automated testing |
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## Requirements
 
-## Agentic Development
+Before installing the project, make sure you have:
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+- PHP **8.3 or newer**
+- Composer
+- Node.js and npm
+- A database supported by Laravel (for example, MySQL or SQLite)
+- Git
+
+Check your installed versions:
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+php -v
+composer --version
+node -v
+npm -v
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Installation
 
-## Contributing
+### 1. Clone the repository
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+From the root of the learning repository:
 
-## Code of Conduct
+```bash
+git clone https://github.com/techgovinda1/learn-laravel-13.git
+cd learn-laravel-13/project-my-notes
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 2. Install PHP dependencies
 
-## Security Vulnerabilities
+```bash
+composer install
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 3. Configure environment variables
 
-## License
+Create your local environment file:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+cp .env.example .env
+```
+
+On Windows PowerShell, use:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Generate the application key:
+
+```bash
+php artisan key:generate
+```
+
+### 4. Configure the database
+
+Update the database settings in `.env` to match your local database.
+
+Example for MySQL:
+
+```dotenv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=my_notes
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Create the `my_notes` database before running the migrations.
+
+For SQLite, configure `DB_CONNECTION=sqlite` and ensure the SQLite database file exists at the path configured by your application.
+
+### 5. Run database migrations
+
+```bash
+php artisan migrate
+```
+
+This creates the tables required by the application.
+
+### 6. Install frontend dependencies
+
+```bash
+npm install
+```
+
+### 7. Start the application
+
+For local development, open two terminal windows.
+
+Terminal 1:
+
+```bash
+php artisan serve
+```
+
+Terminal 2:
+
+```bash
+npm run dev
+```
+
+Visit:
+
+```text
+http://127.0.0.1:8000
+```
+
+Alternatively, if the Composer `dev` script is available in your installed project:
+
+```bash
+composer run dev
+```
+
+## Application Structure
+
+Important files and directories:
+
+```text
+project-my-notes/
+├── app/
+│   ├── Http/
+│   │   └── Controllers/
+│   │       ├── AuthController.php
+│   │       ├── Controller.php
+│   │       └── EntryController.php
+│   ├── Models/
+│   │   ├── Entry.php
+│   │   └── User.php
+│   ├── Policies/
+│   │   └── UserPolicy.php
+│   └── Providers/
+│       └── AppServiceProvider.php
+├── database/
+│   ├── factories/
+│   ├── migrations/
+│   └── seeders/
+├── resources/
+│   ├── css/
+│   ├── js/
+│   └── views/
+│       ├── auth/
+│       ├── components/
+│       └── entries/
+├── routes/
+│   ├── console.php
+│   └── web.php
+├── tests/
+├── artisan
+├── composer.json
+└── package.json
+```
+
+## Laravel Concepts Practiced
+
+This project provides practical examples of the following concepts:
+
+| Concept | What it is used for |
+|---|---|
+| Routing | Mapping URLs to application actions |
+| Controllers | Handling incoming requests and application logic |
+| MVC architecture | Separating models, views, and controllers |
+| Eloquent models | Working with database records |
+| Migrations | Creating and updating database tables |
+| Authentication | Registering and logging in users |
+| Authorization policies | Controlling access to application resources |
+| Blade templates | Rendering dynamic HTML pages |
+| Blade components | Reusing view elements |
+| Form handling | Receiving and processing user input |
+| Validation | Checking submitted data before processing |
+| HTTP methods | Handling GET, POST, PUT/PATCH, and DELETE requests |
+
+## Useful Artisan Commands
+
+```bash
+# List registered routes
+php artisan route:list
+
+# List available Artisan commands
+php artisan list
+
+# Run database migrations
+php artisan migrate
+
+# Roll back the latest migration batch
+php artisan migrate:rollback
+
+# Clear application caches
+php artisan optimize:clear
+
+# Run automated tests
+php artisan test
+```
+
+## Running Tests
+
+Run the project's automated test suite:
+
+```bash
+php artisan test
+```
+
+## Learning Goals
+
+The main goal of this project is to understand Laravel by building a working application instead of learning individual concepts only in theory.
+
+By completing and extending this project, I aim to improve my understanding of:
+
+- Laravel application structure and request lifecycle.
+- MVC architecture and clean code organization.
+- Database design, migrations, and Eloquent ORM.
+- Authentication and authorization.
+- CRUD workflows and form validation.
+- Blade views and reusable components.
+- Testing and debugging Laravel applications.
+
+## Future Improvements
+
+Potential enhancements as my Laravel skills develop:
+
+- Add note categories and tags.
+- Add search, sorting, and pagination.
+- Add note status or pinning functionality.
+- Add automated feature tests for authentication and note ownership.
+- Improve validation and error handling.
+- Add a richer dashboard and responsive UI.
+
+## Repository
+
+This project is one of the practical applications in my Laravel 13 learning repository:
+
+**[Learn Laravel 13 – GitHub Repository](https://github.com/techgovinda1/learn-laravel-13)**
+
+---
+
+**Author:** [Govinda Dahal](https://github.com/techgovinda1)
+
+*Built for learning Laravel 13 through practical application development.*
